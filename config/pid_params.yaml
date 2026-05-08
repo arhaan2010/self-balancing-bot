@@ -1,0 +1,57 @@
+# PID Controller Parameters
+
+control_loop:
+  # Control loop frequency (Hz)
+  frequency: 100
+  
+  # Motor output mapping method
+  motor_mapping:
+    method: differential  # Options: differential, independent, tank
+  
+  # Setpoints (desired angles in degrees)
+  setpoint:
+    pitch: 0.0   # Desired pitch angle
+    roll: 0.0    # Desired roll angle
+    yaw: 0.0     # Desired yaw angle
+  
+  # Dead zones (degrees) - errors smaller than this are ignored
+  dead_zone:
+    pitch: 1.0
+    roll: 1.0
+    yaw: 2.0
+
+# Pitch PID Parameters (forward/backward balance)
+pitch_pid:
+  Kp: 1.5                # Proportional gain
+  Ki: 0.1                # Integral gain
+  Kd: 0.3                # Derivative gain
+  output_min: -100       # Minimum output value
+  output_max: 100        # Maximum output value
+  integral_min: -50      # Integral anti-windup minimum
+  integral_max: 50       # Integral anti-windup maximum
+
+# Roll PID Parameters (left/right balance)
+roll_pid:
+  Kp: 1.5                # Proportional gain
+  Ki: 0.1                # Integral gain
+  Kd: 0.3                # Derivative gain
+  output_min: -100       # Minimum output value
+  output_max: 100        # Maximum output value
+  integral_min: -50      # Integral anti-windup minimum
+  integral_max: 50       # Integral anti-windup maximum
+
+# Yaw PID Parameters (rotation)
+yaw_pid:
+  Kp: 0.5                # Proportional gain
+  Ki: 0.05               # Integral gain
+  Kd: 0.1                # Derivative gain
+  output_min: -50        # Minimum output value
+  output_max: 50         # Maximum output value
+  integral_min: -25      # Integral anti-windup minimum
+  integral_max: 25       # Integral anti-windup maximum
+
+# Safety limits
+safety:
+  max_error: 45                  # Maximum angle error (degrees) before failsafe
+  max_error_rate: 180            # Maximum error change rate (degrees/sec)
+  failsafe_timeout: 2            # Connection failsafe timeout (seconds)

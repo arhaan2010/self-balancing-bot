@@ -1,0 +1,47 @@
+# Pixhawk Configuration
+
+pixhawk:
+  connection:
+    # Connection type: serial, udp, tcp
+    type: serial
+    
+    # Serial connection settings
+    serial:
+      port: /dev/ttyUSB0  # Serial port (check with: ls /dev/tty*)
+      baudrate: 921600     # Baud rate (common: 57600, 115200, 921600)
+    
+    # UDP connection settings (for MAVProxy)
+    udp:
+      address: 127.0.0.1
+      port: 14550
+    
+    # TCP connection settings
+    tcp:
+      address: 127.0.0.1
+      port: 5760
+  
+  # Timeouts (seconds)
+  timeout:
+    heartbeat: 5      # Time to wait for initial heartbeat
+    data_read: 0.5    # Time to wait for data messages
+    failsafe: 2       # Connection failsafe timeout
+  
+  # IMU Configuration
+  imu:
+    # Calibration offsets (degrees)
+    calibration:
+      pitch_offset: 0.0   # Subtract from pitch reading
+      roll_offset: 0.0    # Subtract from roll reading
+      yaw_offset: 0.0     # Subtract from yaw reading
+    
+    # IMU filtering
+    filter:
+      type: rolling_average  # Type of filter
+      window_size: 5         # Number of samples to average
+
+# Safety settings
+safety:
+  failsafe_timeout: 2      # Connection failsafe timeout (seconds)
+  max_error: 45            # Maximum acceptable pitch/roll error (degrees)
+  max_error_rate: 180      # Maximum error change rate (degrees/sec)
+  battery_min_voltage: 3.0 # Minimum battery voltage per cell (V)

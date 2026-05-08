@@ -1,0 +1,35 @@
+# ESC (Electronic Speed Controller) Configuration
+
+esc:
+  # Number of motors
+  count: 2
+  
+  # PWM frequency (Hz)
+  pwm_frequency: 50  # Standard RC PWM frequency
+
+# Motor 1 Configuration
+motor1:
+  gpio_pin: 17                   # GPIO pin number (BCM numbering)
+  min_pulse: 1000                # Minimum PWM pulse width (microseconds)
+  max_pulse: 2000                # Maximum PWM pulse width (microseconds)
+  neutral_pulse: 1500            # Neutral/idle PWM pulse width (microseconds)
+  direction: forward             # Motor direction
+  ramp_rate: 5                   # Throttle ramp rate (%/100ms)
+  max_throttle: 100              # Maximum allowed throttle (%)
+
+# Motor 2 Configuration
+motor2:
+  gpio_pin: 27                   # GPIO pin number (BCM numbering)
+  min_pulse: 1000                # Minimum PWM pulse width (microseconds)
+  max_pulse: 2000                # Maximum PWM pulse width (microseconds)
+  neutral_pulse: 1500            # Neutral/idle PWM pulse width (microseconds)
+  direction: forward             # Motor direction
+  ramp_rate: 5                   # Throttle ramp rate (%/100ms)
+  max_throttle: 100              # Maximum allowed throttle (%)
+
+# ESC Calibration Settings
+calibration:
+  initialization_pulse: 1500     # Pulse to send for initialization (microseconds)
+  initialization_time: 2         # Time to send initialization pulse (seconds)
+  min_throttle_calibration: 1000 # Minimum throttle for calibration
+  max_throttle_calibration: 2000 # Maximum throttle for calibration
