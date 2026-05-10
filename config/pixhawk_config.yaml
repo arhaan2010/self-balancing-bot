@@ -1,47 +1,75 @@
-# Pixhawk Configuration
+# Pixhawk Configuration for Self-Balancing Bot
 
-pixhawk:
-  connection:
-    # Connection type: serial, udp, tcp
-    type: serial
-    
-    # Serial connection settings
-    serial:
-      port: /dev/ttyUSB0  # Serial port (check with: ls /dev/tty*)
-      baudrate: 921600     # Baud rate (common: 57600, 115200, 921600)
-    
-    # UDP connection settings (for MAVProxy)
-    udp:
-      address: 127.0.0.1
-      port: 14550
-    
-    # TCP connection settings
-    tcp:
-      address: 127.0.0.1
-      port: 5760
+# Connection Settings
+connection:
+  # Type: 'serial' for USB connection, 'udp' for network, 'tcp' for telemetry
+  type: 'serial'
   
-  # Timeouts (seconds)
-  timeout:
-    heartbeat: 5      # Time to wait for initial heartbeat
-    data_read: 0.5    # Time to wait for data messages
-    failsafe: 2       # Connection failsafe timeout
-  
-  # IMU Configuration
-  imu:
-    # Calibration offsets (degrees)
-    calibration:
-      pitch_offset: 0.0   # Subtract from pitch reading
-      roll_offset: 0.0    # Subtract from roll reading
-      yaw_offset: 0.0     # Subtract from yaw reading
+  # Serial connection parameters
+  serial:
+    port: '/dev/ttyACM0'  # USB port (check with 'ls /dev/ttyACM*')
+    baudrate: 115200       # Standard Pixhawk baud rate
     
-    # IMU filtering
-    filter:
-      type: rolling_average  # Type of filter
-      window_size: 5         # Number of samples to average
+  # UDP connection (if using network)
+  udp:
+    address: '127.0.0.1'
+    port: 14550
+    
+  # TCP connection (if using telemetry)
+  tcp:
+    address: '127.0.0.1'
+    port: 5760
 
-# Safety settings
+# Timeout Settings
+timeout:
+  heartbeat: 5.0          # Seconds to wait for heartbeat
+  data_read: 1.0          # Timeout for data reads
+
+# IMU Configuration
+imu:
+  # Update rate for IMU data (Hz)
+  update_rate: 100
+  
+  # Calibration offsets (set during calibration)
+  calibration:
+    pitch_offset: 0.0     # Degrees
+    roll_offset: 0.0      # Degrees
+    accel_offset_x: 0.0   # m/s²
+    accel_offset_y: 0.0   # m/s²
+    accel_offset_z: 0.0   # m/s²
+
+# Attitude Message Configuration
+attitude:
+  # Subscribe to ATTITUDE message for real-time orientation
+  enabled: true
+  
+  # Smoothing filter (0.0 = no smoothing, 0.5 = heavy smoothing)
+  smoothing_factor: 0.1
+
+# Sensor Limits
+sensor_limits:
+  # Max pitch angle before failsafe (degrees)
+  max_pitch: 45.0
+  
+  # Max roll angle before failsafe (degrees)
+  max_roll: 45.0
+  
+  # Max angular velocity before failsafe (degrees/second)
+  max_angular_velocity: 300.0
+
+# Safety Parameters
 safety:
-  failsafe_timeout: 2      # Connection failsafe timeout (seconds)
-  max_error: 45            # Maximum acceptable pitch/roll error (degrees)
-  max_error_rate: 180      # Maximum error change rate (degrees/sec)
-  battery_min_voltage: 3.0 # Minimum battery voltage per cell (V)
+  # Enable failsafe if connection lost
+  enable_failsafe: true
+  
+  # Failsafe action: 'disarm', 'land', 'hold'
+  failsafe_action: 'disarm'
+  
+  # Time without data before failsafe triggers (seconds)
+  failsafe_timeout: 2.0
+
+# Logging
+logging:
+  enabled: true
+  log_file: 'logs/pixhawk.log'
+  log_level: 'INFO'        # DEBUG, INFO, WARNING, ERROR
